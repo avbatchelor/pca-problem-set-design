@@ -118,13 +118,16 @@ for i = 0:2
     [sdf,psth] = spikeDensityFunction(n.rasters{iS},binMs,FS,binMs*4);
     plot(sdf);
     ylabel('Spike Density')
-    xlabel('Tim (ms)')
+    xlabel('Time (ms)')
 
     ax3 = subplot(3,3,7+i);
     plot(stim(iS,:));
     hold on
     plot(n.pools(iS,:)./max(n.pools(iS,:)));
     xlabel('Time (ms)')
-    %legend('Stimulus','Pooled Filter Output')
+    ylabel('a.u.')
+    if i == 0
+        legend('Stimulus','Pooled Filter Output')
+    end
     linkaxes([ax1 ax2],'x')
 end
