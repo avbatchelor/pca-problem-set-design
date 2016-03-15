@@ -60,19 +60,52 @@ for iN = 1:nNeurons;
 
     %% Get spike rasters and pooled output
     binMs = 1;
-    nReps = 50;
+    nReps = 100;
     [nA(iN).rasters,nA(iN).pools] = getModelResponses(nA(iN).filts,nA(iN).weights,stim,nA(iN).baseFR,nA(iN).modFR,binMs,nReps,FS);
     [nB(iN).rasters,nB(iN).pools] = getModelResponses(nB(iN).filts,nB(iN).weights,stim,nB(iN).baseFR,nB(iN).modFR,binMs,nReps,FS);
     [nC(iN).rasters,nC(iN).pools] = getModelResponses(nC(iN).filts,nC(iN).weights,stim,nC(iN).baseFR,nC(iN).modFR,binMs,nReps,FS);
-
+    
+    %% Make sdfs & psths for each neuron's responses
+    for iS = 1:size(stim,1)
+        [nA(iN).sdf(iS,:),nA(iN).psth(iS,:)] = spikeDensityFunction(nA(iN).rasters{iS},binMs,FS,binMs*4);
+        [nB(iN).sdf(iS,:),nB(iN).psth(iS,:)] = spikeDensityFunction(nB(iN).rasters{iS},binMs,FS,binMs*4);
+        [nC(iN).sdf(iS,:),nC(iN).psth(iS,:)] = spikeDensityFunction(nC(iN).rasters{iS},binMs,FS,binMs*4);
+    end
+    
 end
+
+%% Shuffle and combine neural responses ...forloop
+
+% Permute order of neuron types
+permTs = mod(randperm(3*nNeurons),3)+1;
+iA = 1; iB = 1; iC = 1;
+for i = 1:(3*nNeurons)
+    if permTs(i) == 1
+        allN(i).sdf = nA(iA).sdf;
+        iA = iA + 1;
+    elseif permTs(i) == 2
+        allN(i).sdf = nB(iB).sdf;
+        iB = iB + 1;
+    elseif permTs(i) == 3
+        allN(i).sdf = nC(iC).sdf;
+        iC = iC + 1;
+    end
+end
+% Permute all again (for fun!) and leave two out
+allN = allN(randperm(numel(allN)-2));
+clear iA iB iC i
+
+%% Save model neurons and ancillary variables to current directory
+save(fullfile(pwd,'model_neurons_output.mat'),'nA','nB','nC','stim','time','FS','binMs','-v7.3')
+% Save shuffled neurons
+save(fullfile(pwd,'blind_neurons.mat'),'allN','stim','time','FS','binMs','-v7.3')
 
 %% Plot model output (raster, sdf, stimulus, pooled output...)
 iN = 1;
 iS = 1;
 n = nB(iN);
 
-figure
+figure();
 for i = 0:2
     iS = i*2+1;
     ax1 = subplot(3,3,1+i);
@@ -95,6 +128,3 @@ for i = 0:2
     %legend('Stimulus','Pooled Filter Output')
     linkaxes([ax1 ax2],'x')
 end
-
-%% Save model neurons and ancillary variables to current directory
-save(fullfile(pwd,'model_neurons_output.mat'),'nA','nB','nC','stim','time','FS','binMs','-v7.3')
