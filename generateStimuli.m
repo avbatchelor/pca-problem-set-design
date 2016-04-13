@@ -50,6 +50,8 @@ for stimType = 1:6
     % filter, rectify, normalize stimuli
     stimuli(stimType,:) = sosfilt(sos,stimCmd);
     stimuli(stimType,[stimuli(stimType,:) < 0]) = 0;
-    stimuli(stimType,:) = stimuli(stimType,:)./max(stimuli(stimType,:));
+    if max(stimuli(stimType,:)) > 0
+        stimuli(stimType,:) = stimuli(stimType,:)./max(stimuli(stimType,:));
+    end
     time = (1:1000*F)./sampleRate;
 end
