@@ -211,6 +211,19 @@ my_save_fig('neuron_data_fig')
 % Insert code here
 % ================
 
+%% Plot the covariance matrix of the principal components
+% Again use imagesc and colorbar 
+
+% ================
+% Insert code here
+% ================
+
+%% Save the covariance matrix figure
+
+% ================
+% Insert code here
+% ================
+
 %% Find the loadings of each neuron on the principal components
 % You find these loadings by projecting the data matrix onto the principal
 % components.  You do this my multiplying the data matrix and the principal

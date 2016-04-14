@@ -8,9 +8,9 @@ set(gcf,'Position',p(1,:)) % Makes the figure full screen on the first monitor
 if ~exist('figSize','var')
     figSize = [5 3];
 end
-set(gcf, 'PaperSize', figSize);
-set(gcf,'PaperUnits','inches','PaperPositionMode','manual','PaperPosition',[0 0,figSize]);
+% set(gcf, 'PaperSize', figSize);
+% set(gcf,'PaperUnits','inches','PaperPositionMode','manual','PaperPosition',[0 0,figSize]);
 
 % Save as emf file 
-imageFilename = [filename,'.emf'];
-print(gcf,'-dmeta',imageFilename,'-r300','-painters','-cmyk')
+imageFilename = [filename,'.pdf'];
+saveas(gcf,filename,'pdf')

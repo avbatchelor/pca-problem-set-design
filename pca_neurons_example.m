@@ -6,7 +6,7 @@ close all
 clear all
 
 %% Load data 
-load('C:\Users\Alex\Documents\GitHub\nb204-LNLNP-tuning-simulation\pca_data.mat')
+load('pca_data.mat')
 
 %% Plot data
 figure
@@ -83,6 +83,11 @@ linkaxes(ax(:),'y')
 ax_lims = [min(pcs(:)),max(pcs(:))];
 ylim(ax_lims)
 
+%% Plot new covariance matrix 
+cov_mat_2 = cov(pcs);
+figure
+imagesc(cov_mat_2)
+title('new cov matrix')
 
 %% Find weights by projecting each cell onto principal components
 % Find weights
