@@ -38,20 +38,20 @@ for iN = 1:nNeurons;
     nA(iN).use      = [     1       0       0       0       0       1       ];
     nA(iN).mu       = [     20      00  	00      00      00   	15      ]./1000;
     nA(iN).sigma    = [     05      00      00      00      00  	05      ]./1000;
-    nA(iN).baseFR   = 2;
+    nA(iN).baseFR   = 8;
     nA(iN).modFR    = 10;
     % Neuron type-B (reasonable start)
-    nB(iN).use      = [     0       1       1       0    	1       0       ];
+    nB(iN).use      = [     0       1       1       0    	1       1       ];
     nB(iN).mu       = [     0      14      06       0       10      0       ]./1000;
     nB(iN).sigma    = [     0      04      02       0       02      0       ]./1000;
-    nB(iN).baseFR   = 3;
-    nB(iN).modFR    = 14;
+    nB(iN).baseFR   = 9;
+    nB(iN).modFR    = 10;
     % Neuron type-C (reasonable start)
     nC(iN).use      = [     0       0       1       1       0       0       ];
     nC(iN).mu       = [     0       0       06      08      0       0       ]./1000;
     nC(iN).sigma    = [     0       0       01      05      0       0       ]./1000;
-    nC(iN).baseFR   = 5;
-    nC(iN).modFR    = 14;
+    nC(iN).baseFR   = 12;
+    nC(iN).modFR    = 22;
 
     %% Generate filters for each neuron type (the subunits)
     [nA(iN).filts,nA(iN).weights] = makeSubunits(nA(iN),FS);
@@ -105,7 +105,7 @@ iN = 1;
 iS = 1;
 n = nB(iN);
 
-figure();
+figure('Color',[1 1 1]);
 for i = 0:2
     iS = i*2+1;
     ax1 = subplot(3,3,1+i);
@@ -113,12 +113,14 @@ for i = 0:2
     title('Model Neuron Spiking')
     ylabel('Trial Number')
     xlabel('Bins (ms)')
+    box off
 
     ax2 = subplot(3,3,4+i);
     [sdf,psth] = spikeDensityFunction(n.rasters{iS},binMs,FS,binMs*4);
     plot(sdf);
     ylabel('Spike Density')
     xlabel('Time (ms)')
+    box off
 
     ax3 = subplot(3,3,7+i);
     plot(stim(iS,:));
@@ -126,8 +128,18 @@ for i = 0:2
     plot(n.pools(iS,:)./max(n.pools(iS,:)));
     xlabel('Time (ms)')
     ylabel('a.u.')
+    box off
     if i == 0
         legend('Stimulus','Pooled Filter Output')
     end
     linkaxes([ax1 ax2],'x')
 end
+
+%% Save a more simplified set of variables 
+dsLen = 5000; % Length of appended response vectors
+data = cell2mat(struct2cell(allN));
+data = permute(data,[2 1 3]);
+data = reshape(data,dsLen,[])';
+stim = downsample(reshape(stim',[],1),binMs/(1000/FS))';
+time = (1:dsLen)./1000;
+save(fullfile(pwd,'nb204_pca','pca_data.mat'),'data','stim','time','-v7.3');

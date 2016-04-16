@@ -2,6 +2,8 @@
 load('C:\Users\Alex\Documents\GitHub\nb204-LNLNP-tuning-simulation\blind_neurons.mat')
 
 %% Make data matrix 
+
+% data are already shuffled? why is this like this
 allN_cell = struct2cell(allN);
 allN_mat = cell2mat(allN_cell);
 allN_mat_p = permute(allN_mat,[2 1 3]);

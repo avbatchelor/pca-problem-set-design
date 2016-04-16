@@ -21,7 +21,7 @@ F = sampleRate/1000;
 % matrix of stim[ms]
 stimuli = zeros(5,1000*F);
 
-for stimType = 1:6
+for stimType = 1:5
     switch stimType
         case 1
             % 500ms on
@@ -42,9 +42,9 @@ for stimType = 1:6
             % ramping down over 500ms
             ramp = linspace(1,0,500*F);
             stimCmd = [0.*ones(250*F,1); ramp'; 0.*ones(250*F,1)];
-        case 6
-            % blank
-            stimCmd = 0.*ones(1000*F,1);
+%         case 6
+%             % blank
+%             stimCmd = 0.*ones(1000*F,1);
     end
 
     % filter, rectify, normalize stimuli

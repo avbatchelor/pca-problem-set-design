@@ -37,4 +37,5 @@ for iS = 1:M
         rasters{iS}(iR,:) = rand(1, nBins) < dsPool.*(modFR);
         rasters{iS}(iR,:) = rmRefSpikes(rasters{iS}(iR,:),1,1);
     end
+        
 end
