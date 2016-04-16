@@ -34,22 +34,22 @@ for iN = 1:nNeurons;
     % nX(i).modFR  defines 'modulated' firing rate for the class (will vary by 10%)
     % see makeSubunits for 
 
-    % Neuron type-A
-    nA(iN).use      = [     1       0       0       0       0       1       ];
-    nA(iN).mu       = [     20      00  	00      00      00   	15      ]./1000;
-    nA(iN).sigma    = [     05      00      00      00      00  	05      ]./1000;
-    nA(iN).baseFR   = 8;
-    nA(iN).modFR    = 10;
-    % Neuron type-B (reasonable start)
-    nB(iN).use      = [     0       1       1       0    	1       1       ];
-    nB(iN).mu       = [     0      14      06       0       10      0       ]./1000;
-    nB(iN).sigma    = [     0      04      02       0       02      0       ]./1000;
-    nB(iN).baseFR   = 9;
-    nB(iN).modFR    = 10;
-    % Neuron type-C (reasonable start)
+    % Neuron type-A OK
+    nA(iN).use      = [     1       0       1       0       0       1       ];
+    nA(iN).mu       = [     20      00  	02      00      00   	15      ]./1000;
+    nA(iN).sigma    = [     05      00      01      00      00  	05      ]./1000;
+    nA(iN).baseFR   = 10;
+    nA(iN).modFR    = 14;
+    % Neuron type-B OK   
+    nB(iN).use      = [     0       1       1       0    	1       0       ];
+    nB(iN).mu       = [     0      20      02       0       40      0       ]./1000;
+    nB(iN).sigma    = [     0      10      01       0       80      0       ]./1000;
+    nB(iN).baseFR   = 12;
+    nB(iN).modFR    = 15;
+    % Neuron type-C OK
     nC(iN).use      = [     0       0       1       1       0       0       ];
-    nC(iN).mu       = [     0       0       06      08      0       0       ]./1000;
-    nC(iN).sigma    = [     0       0       01      05      0       0       ]./1000;
+    nC(iN).mu       = [     00      0       06      08      0       0       ]./1000;
+    nC(iN).sigma    = [     00      0       08      10      0       0       ]./1000;
     nC(iN).baseFR   = 12;
     nC(iN).modFR    = 22;
 
@@ -101,9 +101,9 @@ save(fullfile(pwd,'model_neurons_output.mat'),'nA','nB','nC','stim','time','FS',
 save(fullfile(pwd,'blind_neurons.mat'),'allN','stim','time','FS','binMs','-v7.3')
 
 %% Plot model output (raster, sdf, stimulus, pooled output...)
-iN = 1;
+iN = 2;
 iS = 1;
-n = nB(iN);
+n = nC(iN);
 
 figure('Color',[1 1 1]);
 for i = 0:2
@@ -134,6 +134,9 @@ for i = 0:2
     end
     linkaxes([ax1 ax2],'x')
 end
+
+% %%% Mind the return %%%
+% return
 
 %% Save a more simplified set of variables 
 dsLen = 5000; % Length of appended response vectors

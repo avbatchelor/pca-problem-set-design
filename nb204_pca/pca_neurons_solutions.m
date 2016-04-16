@@ -157,7 +157,7 @@ saveFormattedFig(centeredFigName);
 % data!). This will return a matrix that has variance along the diagonal
 % entries and the covariance in the off-diagonal entries.
 
-% You have done this correctly if dataCov(1,1) = XXXXXXXX
+% You have done this correctly if dataCov(1,1) = 0.3275
 
 % =======================
 % Insert/Modify code here
@@ -216,7 +216,7 @@ saveFormattedFig(covFigName);
 % Read the help documentation on pca for further information. Plotting
 % values against each other can be helpful in exploring the data.
 
-% You have done this correctly if coeff(1,1) = XXXXXXXX
+% You have done this correctly if coeff(1,1) = 0.0724
 
 % =======================
 % Insert/Modify code here
@@ -289,7 +289,7 @@ saveFormattedFig(pcFigName);
 % Remember this corresponds to the 'score' output of the 'pca' function.
 % Again use the 'imagesc' and 'colorbar' functions for plotting.
 % 
-% You have done this correctly if the first entry in the matrix = XXXXXXXX
+% You have done this correctly if the first entry in the matrix = 47.1669
 
 % =======================
 % Insert/Modify code here
