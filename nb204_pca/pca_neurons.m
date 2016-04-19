@@ -192,11 +192,13 @@ dataCov = [];
 % Use 'plot3' to make a 3D plot. Plot each loading as a discrete dot or
 % circle for clarity, and please label the axes. Remember the loadings
 % correspond to the 'coeff' output of the 'pca' function.
+%
 %   hint: type 'doc plot3' for info about how to label the axes 
-%   hint: pass 'o' to the plot3 function, to plot each loading as a discrete dot,
-%   like this example: plot3(x_variable, y_variable, z_variable,'o') 
+%   hint: pass 'o' to the plot3 function, to plot each loading as a 
+%       discrete dot, like this example: 
+%       plot3(x_variable, y_variable, z_variable,'o') 
 %   hint: using 'grid on' might make your graph
-%   more easily viewable
+%       more easily viewable
 
 % =======================
 % Insert/Modify code here
