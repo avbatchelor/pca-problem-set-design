@@ -54,7 +54,6 @@ ylabel('Spike rate (Hz)')
 psthFigName = 'psth_response_fig';
 saveFormattedFig(psthFigName)
 
-
 %% Generate the covariance matrix
 % Use the 'cov' function to calculate the covariance (using the centered
 % data!). This will return a matrix that has variance along the diagonal
@@ -69,7 +68,6 @@ saveFormattedFig(psthFigName)
 dataCov = [];
 
 % =======================
-
 
 %% Plot the covariance matrix
 % You can use the 'imagesc' function to visualise the covariance matrix.
@@ -88,7 +86,6 @@ dataCov = [];
 % Insert/Modify code here
 
 % =======================
-
 
 %% Perform PCA
 % Use the 'pca' function to run PCA on the data matrix. Your goal is to
@@ -151,7 +148,6 @@ dataCov = [];
 
 % =======================
 
-
 %% Plot explained variance (~Scree plot)
 % Use the output from the 'pca' function above to make a plot of the
 % different PC contributions to explained variance in the data.
@@ -172,8 +168,6 @@ dataCov = [];
 % Insert/Modify code here
 
 % =======================
-
-
 
 %% Make a 3D plot of each neuron's loadings for the first 3 PCs
 % Use 'plot3' to make a 3D plot. Plot each loading as a discrete dot or
@@ -222,5 +216,4 @@ dataCov = [];
 % continue by answering the extension problems as outlined in the homework
 % instructions. Some problems will require more coding, you may complete
 % this below.
-
 
