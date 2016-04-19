@@ -163,7 +163,7 @@ saveFormattedFig(centeredFigName);
 dataCov = [];
 
 %d
-dataCov = cov(centeredData);
+dataCov = cov(data');
 
 % =======================
 
