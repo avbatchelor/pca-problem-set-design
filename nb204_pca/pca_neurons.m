@@ -72,6 +72,7 @@ saveFormattedFig(psthFigName)
 % function works. 
 
 % You have done this correctly if dataCov(1,1) = 1.0474
+
 % Replace the [] with your own code below.
 
 % =======================
