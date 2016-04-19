@@ -28,6 +28,8 @@ load('pca_data.mat')
 % first six neurons in the same figure.  You can copy and change this code
 % to create your other figures.
 
+% If you can't see the data in the figure, maximize the figure so you can. 
+
 figure
 ax(1) = subplot(6,1,1); % subplot allows you to plot multiple graphs in the same figure
 plot(time,stim','r') % Plot the stimulus in red ('r')
@@ -48,16 +50,12 @@ ylabel('Spike rate (Hz)')
 % 'saveFormattedFig' with the the name of the file you wish to save as a
 % string, as below:
 
-% =======================
-% Insert/Modify code here
-
+% You don't need to change any code in the saveFormattedFig.m file. 
 psthFigName = 'psth_response_fig';
 saveFormattedFig(psthFigName)
 
-% =======================
 
-
-%% Determine the number of neurons and number of time points 
+%% Calculate the number of neurons and number of time points using the size of the data matrix 
 % Use the 'size' function to get the size of each dimension of the data matrix 
 %   hint: type 'doc size' for help on the size function
 % Assign the number of neurons to the variable 'nNeurons' [ for n(umber)Neurons ]
