@@ -14,7 +14,7 @@
 clear;      % Delete all  variables in workspace, you will lose unsaved variables
 close all;  % Close all of the open figure windows
 
-%% Load data 
+%% Load data
 % This line loads three variables: data, stim, time
 load('pca_data.mat')
 
@@ -61,6 +61,7 @@ saveFormattedFig(psthFigName)
 % entries and the covariance in the off-diagonal entries.
 
 % You have done this correctly if dataCov(1,1) = 0.3275
+% Replace the [] with your own code below.
 
 % =======================
 % Insert/Modify code here
@@ -97,30 +98,28 @@ dataCov = [];
 % functions, where each basis function can be conceptualized as a
 % distinct "response type". You should set up the PCA so that you obtain
 % 58 PCs; you hypothesize that only a few of these PCs are needed to
-% explain most of the variance in the data. (Note: when you use the
-% 'pca' function, you can use either the uncentered data or centered
-% data, because 'pca' centers the data automatically.)
+% explain most of the variance in the data.
 
 % The 'pca' function returns several values. For us the important ones are:
 % 
-% 'score'  -  This is a matrix containing the representation of the data
-% set in PC space. Essentially, this is the data set after it has been
-% rotated. Recall that the original data set consisted of 58 vectors,
-% with each vector representing a neural response measured at 5000 time
-% points; this new matrix therefore also consists of 58 vectors measured
-% at 5000 time points. The vectors in the score matrix are also
-% sometimes referred to as "PCs".
-% 'explained' - This is a list of numbers quantifying the percentage of
-% the variance in the data explained by each of the PCs, in descending
-% order of variance explained.
-% 'coeff' - This is a matrix that quantifies the importance of each
-% variable (here, each neuron in the original dataset) in accounting for
-% the variability of the associated PC. (This matrix gets the name
-% 'coeff' because it contains the correlation coefficients between the
-% data in PC space and the original data.) These values are also known
-% as loadings. Each column of coeff contains coefficients for one
-% principal component, and the columns are in descending order of
-% component variance.
+%   'score' - This is a matrix containing the representation of the data
+%       set in PC space. Essentially, this is the data set after it has
+%       been rotated. Recall that the original data set consisted of 58 
+%       vectors, with each vector representing a neural response measured 
+%       at 5000 time points; this new matrix therefore also consists of 58 
+%       vectors measured at 5000 time points. The vectors in the score 
+%       matrix are also sometimes referred to as "PCs".
+%   'explained' - This is a list of numbers quantifying the percentage of
+%       the variance in the data explained by each of the PCs, in 
+%       descending order of variance explained.
+%   'coeff' - This is a matrix that quantifies the importance of each
+%       variable (here, each neuron in the original dataset) in accounting 
+%       for the variability of the associated PC. (This matrix gets the 
+%       name 'coeff' because it contains the correlation coefficients 
+%       between the data in PC space and the original data.) These values 
+%       are also known as loadings. Each column of coeff contains 
+%       coefficients for one principal component, and the columns are in 
+%       descending order of component variance.
 
 % Read the help documentation on pca for further information. 
 
@@ -158,8 +157,8 @@ dataCov = [];
 % different PC contributions to explained variance in the data.
 %
 %   hint: To make it easy to see the variance explained by each pc when you
-%   plot 'explained' also pass '-o' to the plot function, like this example:
-%   plot(explained,'-o')
+%       plot 'explained' also pass '-o' to the plot function, like this
+%       example: plot(explained,'-o')
 
 % =======================
 % Insert/Modify code here
@@ -198,10 +197,9 @@ dataCov = [];
 % =======================
 
 %% Find the covariance matrix of data in the PC space and plot it
-% Again, use the 'imagesc' function and the 'colorbar' function for
-% plotting. You should have 58 PCs, so this should be a 58-by-58
-% matrix (i.e. the same size as the previous covariance matrix you
-% plotted). 
+% Use the 'imagesc' function and the 'colorbar' function for plotting. You
+% should have 58 PCs, so this should be a 58-by-58 matrix (i.e. the same
+% size as the previous covariance matrix you plotted).
 % 
 % You have done this correctly if the first entry in the matrix = 47.1669
 
@@ -222,7 +220,7 @@ dataCov = [];
 %% Extension problems
 % If you feel confident or would like to gain additional practice, please
 % continue by answering the extension problems as outlined in the homework
-% instructions. Some problems will require more coding please complete this
-% below.
+% instructions. Some problems will require more coding, you may complete
+% this below.
 
 
