@@ -4,9 +4,9 @@
 %
 % To make this script easier to use, the task is broken into  sections,
 % each section with a bold header (those starting with '%%') can be run by
-% themselves (without running the entire script) using the 'run section
-% command'. Just place your cursor within one of these sections (it will
-% become highlighted) to allow this functionality.
+% themselves (without running the entire script) using "ctrl + enter"
+% (Windows) or "command + enter" (MAC). Just place your cursor within one of
+% these sections (the section will become highlighted) to allow this functionality.
 % 
 % AVB & SLH 4/2016
 
@@ -14,12 +14,12 @@
 clear;      % Delete all  variables in workspace, you will lose unsaved variables
 close all;  % Close all of the open figure windows
 
-%% Load data 
+%% Load data
 % This line loads three variables: data, stim, time
 load('pca_data.mat')
 
 % data is a 58x5000 matrix, Neurons x Time Points
-% Each row is the PSTH of a neuron's response to the stimuli
+% Each row of data is the PSTH of a neuron's response to the stimuli
 % stim is a 1x5000 column vector of the Stimuli over time
 % time is a 1x5000 column vector of the Time in second
 
@@ -27,6 +27,8 @@ load('pca_data.mat')
 % This section of the code plots the stimulus and the responses for the
 % first six neurons in the same figure.  You can copy and change this code
 % to create your other figures.
+
+% If you can't see the data in the figure, maximize the figure so you can. 
 
 figure
 ax(1) = subplot(6,1,1); % subplot allows you to plot multiple graphs in the same figure
@@ -48,95 +50,30 @@ ylabel('Spike rate (Hz)')
 % 'saveFormattedFig' with the the name of the file you wish to save as a
 % string, as below:
 
-% =======================
-% Insert/Modify code here
-
+% You don't need to change any code in the saveFormattedFig.m file. 
 psthFigName = 'psth_response_fig';
 saveFormattedFig(psthFigName)
 
-% =======================
-
-
-%% Determine the number of neurons and number of time points 
-% Use the 'size' function to get the size of each dimension of the data matrix 
-%   hint: type 'doc size' for help on the size function
-% Assign the number of neurons to the variable 'nNeurons' [ for n(umber)Neurons ]
-% Assign the number of time points to the variable 'nTimePts'
-
-% =======================
-% Insert/Modify code here
-
-% This is an 'empty' assignment, change it to be the appropriate values by
-% using the size function.
-nNeurons = []; 
-nTimePts = [];
-
-% =======================
-
-%% "Center" the neural responses by subtracting off each mean response 
-% First calculate the mean of each neuron's response using 'mean'. 
-% Make sure you calculate the mean of data along the correct axis!
-% Calculate the neuron's mean response and NOT the mean response of all
-% neurons for one time point. 
-%   hint: type 'doc mean' for how to choose the axis 'mean' averages over
-%
-% Assign the mean response matrix to the variable 'mu' below.
-
-% =======================
-% Insert/Modify code here
-
-mu = [];
-
-% =======================
-
-% Next subtract each neuron's mean response from its response.
-%   hint: The easiest way to do this is by subtracting the matrix mu from 
-%       the data matrix. To perform subtraction the dimensions of the
-%       matricies must match. You will need to make a copy of mu for
-%       each time point to get the dimensions to be the same.
-%   hint: 'repmat' will repeat a matrix to make a larger matrix, type 'doc
-%       repmat' for help using this function. Use the nTimePts variable to
-%       define the number of time dimensions you need
-%
-% Assign the mean subtracted (centered) responses to the variable
-% 'centeredData' below.
-
-% =======================
-% Insert/Modify code here
-
-centeredData = [];
-
-% =======================
-
-%% Plot centered neural responses for the first six neurons
-% Use the plotting code above, or any method you want, to visualize mean
-% subtraction. Include a title or otherwise indicate what operation has
-% occured. You do not need to include the stimulus, but may if you like.
-
-% =======================
-% Insert/Modify code here
-
-% =======================
-
-
-%% Save a figure of the centered data
-% Uncomment the code below and fill in a name for your figure.
-
-% =======================
-% Insert/Modify code here
-
-%centeredFigName = '';
-%saveFormattedFig(centeredFigName);
-
-% =======================
-
-
 %% Generate the covariance matrix
-% Use the 'cov' function to calculate the covariance (using the centered
-% data!). This will return a matrix that has variance along the diagonal
+% Use the 'cov' function to calculate the covariance matrix.  The 'cov'
+% function automatically centers the data so you do not need to do this. 
+% This function will return a matrix that has variance along the diagonal
 % entries and the covariance in the off-diagonal entries.
 
-% You have done this correctly if dataCov(1,1) = 0.3275
+% Note that for this data we could either calculate a covariance matrix of
+% how different neurons covary together or of how different time points
+% covary together. (i.e. we calculate either how the rows or columns of the
+% data matrix covary). Recall that our goal in the end is to use PCA to
+% reduce the dimensionality of the data from 58 neurons to a smaller number
+% of ‘principal component’ neurons so think about which covariance matrix
+% is most useful to us if we want to achieve this goal.
+
+% Hint: Type 'doc cov' in the command window to look up how the 'cov'
+% function works. 
+
+% You have done this correctly if dataCov(1,1) = 1.0474
+
+% Replace the [] with your own code below.
 
 % =======================
 % Insert/Modify code here
@@ -144,7 +81,6 @@ centeredData = [];
 dataCov = [];
 
 % =======================
-
 
 %% Plot the covariance matrix
 % You can use the 'imagesc' function to visualise the covariance matrix.
@@ -164,27 +100,67 @@ dataCov = [];
 
 % =======================
 
+%% Perform PCA
+% Use the 'pca' function to run PCA on the data matrix. Your goal is to
+% analyze the relationships among neurons, not the relationships among
+% time points. Your hypothesis is that the responses of all 58 neurons
+% can be reduced to linear combinations of a few orthogonal basis
+% functions, where each basis function can be conceptualized as a
+% distinct "response type". You should set up the PCA so that you obtain
+% 58 PCs; you hypothesize that only a few of these PCs are needed to
+% explain most of the variance in the data.
 
-%% Find the principal components of the responses
-% Use the 'pca' function on the data matrix (you do not need to use the
-% centered data).
-%   hint: Make sure the input to 'pca' is in the correct orientation, you
-%       may need to transpose the data matrix using the transpose function 
-%       e.g. x_transposed = x'
-%
-% The 'pca' function returns several values, for us the important ones are:
-%   'score'     - essentially the "Principal Components" or PCs
-%   'explained' - The amount of variance explained by each of the PCs
-%   'coeff'     - also known as "loadings" these measure the importance of
-%                 each variable in accounting for the variability of the 
-%                 associated PC.
-%                 (named coeff as they are the correlation coefficients 
-%                 between the 'scores' and the original variables)
-%
-% Read the help documentation on pca for further information. Plotting
-% values against each other can be helpful in exploring the data.
+% The 'pca' function returns several values. For us the important ones are:
+% 
+%   'score' - This is a matrix containing the representation of the data
+%       set in PC space. Essentially, this is the data set after it has
+%       been rotated. Recall that the original data set consisted of 58
+%       vectors, with each vector representing a neural response measured
+%       at 5000 time points; this new matrix therefore also consists of 58
+%       vectors measured at 5000 time points. Note that there is some
+%       confusion of terminology in the literature.  Sometimes the PC
+%       scores are referred to as the "Principal components (PCs)" while
+%       other times our new axes (the eigenvectors) are called the
+%       "Principal components". We prefer the second usage and hence we
+%       will refer to the scores as "PC scores" and to the axes as PCs but
+%       you should be familiar with both.
+%   'explained' - This is a list of numbers quantifying the percentage of
+%       the variance in the data explained by each of the PCs, in 
+%       descending order of variance explained.
+%   'coeff' - This is a matrix that quantifies the importance of each
+%       variable (here, each neuron in the original dataset) in accounting 
+%       for the variability of the associated PC. (This matrix gets the 
+%       name 'coeff' because it contains the correlation coefficients 
+%       between the data in PC space and the original data.) These values 
+%       are also known as loadings. Each column of coeff contains 
+%       coefficients for one principal component, and the columns are in 
+%       descending order of component variance.
+
+% Read the help documentation on pca for further information. 
+
+% If you're confused, we recommend first performing PCA and the plotting
+% steps below and then coming back to revise your code based on your
+% results. Plotting the outputs from the pca function can be helpful for
+% understanding what pca is doing.
 
 % You have done this correctly if coeff(1,1) = 0.0724
+
+% =======================
+% Insert/Modify code here
+
+% =======================
+
+%% Use the output of 'pca' to plot the first six principal component scores
+% The first six PC scores are the first six vectors in the score matrix,
+% where each vector is a list of 5000 numbers.
+
+% =======================
+% Insert/Modify code here
+
+% =======================
+
+%% Save the Principal Component Scores figure
+% Use the example above to save the matrix.
 
 % =======================
 % Insert/Modify code here
@@ -195,7 +171,9 @@ dataCov = [];
 % Use the output from the 'pca' function above to make a plot of the
 % different PC contributions to explained variance in the data.
 %
-%   hint: to make the plot more clear, pass '-o' to the 'plot' function.
+%   hint: To make it easy to see the variance explained by each pc when you
+%       plot 'explained' also pass '-o' to the plot function, like this
+%       example: plot(explained,'-o')
 
 % =======================
 % Insert/Modify code here
@@ -210,16 +188,24 @@ dataCov = [];
 
 % =======================
 
-%% Plot the first 6 principal components
-% Use the output of 'pca' to plot the principal components. See the notes
-% in the previous section for help on this.
+%% Make a 3D plot of each neuron's loadings for the first 3 PCs
+% Use 'plot3' to make a 3D plot. Plot each loading as a discrete dot or
+% circle for clarity, and please label the axes. Remember the loadings
+% correspond to the 'coeff' output of the 'pca' function.
+%
+%   hint: type 'doc plot3' for info about how to label the axes 
+%   hint: pass 'o' to the plot3 function, to plot each loading as a 
+%       discrete dot, like this example: 
+%       plot3(x_variable, y_variable, z_variable,'o') 
+%   hint: using 'grid on' might make your graph
+%       more easily viewable
 
 % =======================
 % Insert/Modify code here
 
 % =======================
 
-%% Save the Principal Component figure
+%% Save loadings figure
 % Use the example above to save the matrix.
 
 % =======================
@@ -227,9 +213,10 @@ dataCov = [];
 
 % =======================
 
-%% Find the covariance matrix of the principal components & plot it
-% Remember this corresponds to the 'score' output of the 'pca' function.
-% Again use the 'imagesc' and 'colorbar' functions for plotting.
+%% Find the covariance matrix of data in the PC space and plot it
+% Use the 'imagesc' function and the 'colorbar' function for plotting. You
+% should have 58 PCs, so this should be a 58-by-58 matrix (i.e. the same
+% size as the previous covariance matrix you plotted).
 % 
 % You have done this correctly if the first entry in the matrix = 47.1669
 
@@ -246,31 +233,10 @@ dataCov = [];
 
 % =======================
 
-%% Make a 3D plot of each neuron's loadings for the first 3 PCs
-% Use 'plot3' to make a 3D plot. Plot each loading as a discrete dot or
-% circle for clarity, and please label the axes. Remember the loadings
-% correspond to the 'coeff' output of the 'pca' function.
-%   hint: type 'doc Chart Line Properties' and select the first search
-%       result for help with plot formatting.
-%   hint: using 'grid on' might make your graph more easily viewable
-
-% =======================
-% Insert/Modify code here
-
-% =======================
-
-%% Save loadings figure
-% Use the example above to save the matrix.
-
-% =======================
-% Insert/Modify code here
-
-% =======================
 
 %% Extension problems
 % If you feel confident or would like to gain additional practice, please
 % continue by answering the extension problems as outlined in the homework
-% instructions. Some problems will require more coding please complete this
-% below.
-
+% instructions. Some problems will require more coding, you may complete
+% this below.
 
